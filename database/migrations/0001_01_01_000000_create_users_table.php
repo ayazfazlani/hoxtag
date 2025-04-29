@@ -15,6 +15,12 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('email')->unique();
+            // phone 
+            $table->string('phone')->nullable();
+            // gameid 
+            $table->string('gameid')->nullable();
+            // referral_code    
+            $table->string('referral_code')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->rememberToken();

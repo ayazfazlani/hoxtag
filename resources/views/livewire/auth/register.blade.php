@@ -12,6 +12,9 @@ new #[Layout('components.layouts.auth')] class extends Component {
     public string $name = '';
     public string $email = '';
     public string $password = '';
+    public string $gameid = '';
+    public string $phone = '';
+    public string $referral_code = '';
     public string $password_confirmation = '';
 
     /**
@@ -23,6 +26,9 @@ new #[Layout('components.layouts.auth')] class extends Component {
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()],
+            'phone' => ['required', 'string', 'max:255'],
+            'referral_code' => ['nullable', 'string', 'max:255'],
+            'gameid' => ['nullable', 'string', 'max:255'],
         ]);
 
         $validated['password'] = Hash::make($validated['password']);
@@ -45,7 +51,7 @@ new #[Layout('components.layouts.auth')] class extends Component {
     <form wire:submit="register" class="flex flex-col gap-6">
         <!-- Name -->
         <label class="floating-label validator rounded-md w-full input-bordered flex items-center gap-2">
-            <span>Your name</span>
+            <span>Name</span>
             <flux:icon.user class="h-5 w-5 opacity-50" />
             <input type="text" class="input w-full rounded-md input-lg" wire:model="name" placeholder="John Doe"
                 required />
@@ -54,7 +60,7 @@ new #[Layout('components.layouts.auth')] class extends Component {
 
         <!-- Email Address -->
         <label class="floating-label validator rounded-md w-full input-bordered flex items-center gap-2">
-            <span>Your email</span>
+            <span>Email</span>
             <flux:icon.envelope class="h-5 w-5 opacity-50" />
             <input type="email" class="input w-full rounded-md input-lg" wire:model="email" placeholder="mail@site.com"
                 required />
@@ -62,17 +68,24 @@ new #[Layout('components.layouts.auth')] class extends Component {
         </label>
         <!-- phone -->
         <label class="floating-label validator rounded-md w-full input-bordered flex items-center gap-2">
-            <span>Your phone</span>
+            <span>Phone</span>
             <flux:icon.phone class="h-5 w-5 opacity-50" />
             <input type="text" class="input w-full rounded-md input-lg" wire:model="phone" placeholder="+123456789"
                 required />
         </label>
         <!-- phone -->
-
+        {{-- gameid --}}
+        <label class="floating-label validator rounded-md w-full input-bordered flex items-center gap-2">
+            <span>Game ID</span>
+            <flux:icon.qr-code class="h-5 w-5 opacity-50" />
+            <input type="text" class="input w-full rounded-md input-lg" wire:model="gameid" placeholder="123456789"
+                required />
+        </label>
+        {{-- gameid --}}
 
         <!-- Password -->
         <label class="floating-label validator rounded-md w-full input-bordered flex items-center gap-2">
-            <span>Your password</span>
+            <span>Password</span>
             <flux:icon.lock-closed class="h-5 w-5 opacity-50" />
             <input type="password" class="input w-full rounded-md input-lg" wire:model="password" placeholder="********"
                 required />
@@ -94,15 +107,15 @@ new #[Layout('components.layouts.auth')] class extends Component {
                 placeholder="123456789" />
         </label>
         <!-- referal code -->
-
+        {{-- button --}}
+        <div class="flex items-center justify-end">
+            <button type="submit" class="btn btn-primary rounded-md w-full">
+                {{ __('Create account') }}
+            </button>
+        </div>
+        {{-- button --}}
     </form>
-    {{-- button --}}
-    <div class="flex items-center justify-end">
-        <button type="submit" class="btn btn-primary rounded-md w-full">
-            {{ __('Create account') }}
-        </button>
-    </div>
-    {{-- button --}}
+
 
 
     <div class="space-x-1 rtl:space-x-reverse text-center text-sm text-zinc-600 dark:text-zinc-400">

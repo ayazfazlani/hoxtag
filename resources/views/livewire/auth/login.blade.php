@@ -40,7 +40,8 @@ new #[Layout('components.layouts.auth')] class extends Component {
         RateLimiter::clear($this->throttleKey());
         Session::regenerate();
 
-        $this->redirectIntended(default: route('dashboard', absolute: false), navigate: true);
+        $this->redirectIntended(route('dashboard', absolute: false), navigate: true);
+
     }
 
     /**
@@ -82,13 +83,14 @@ new #[Layout('components.layouts.auth')] class extends Component {
 
     <form wire:submit.prevent="login" class="flex flex-col gap-6">
         <!-- Email -->
-        <label class="floating-label validator rounded-md w-full input-bordered flex items-center gap-2">
+        <label class="floating-label  rounded-md w-full input-bordered flex items-center gap-2">
             <span>Your email</span>
             <flux:icon.envelope class="h-5 w-5 opacity-50" />
             <input type="email" class="input w-full rounded-md input-lg" wire:model="email" placeholder="mail@site.com"
                 required />
 
         </label>
+
 
 
         <!-- Password -->
@@ -107,7 +109,7 @@ new #[Layout('components.layouts.auth')] class extends Component {
 
         <!-- Remember Me -->
         <label className="label" class="text-pimary">
-            <input type="checkbox" class="checkbox size-4 bg-base-200" />
+            <input type="checkbox" class="checkbox size-4 bg-base-200" wire:model="remember" />
             Remember me
         </label>
 
